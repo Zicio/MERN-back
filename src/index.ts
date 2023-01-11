@@ -15,9 +15,7 @@ app.use(express.json());
 app.use(router);
 
 const PORT = process.env.PORT || 4000;
-const URL_DB =
-  process.env.URL_DB ||
-  'mongodb+srv://admin:TestDrive@cluster0.usesbgc.mongodb.net/?retryWrites=true&w=majority';
+const URL_DB = process.env.URL_DB;
 
 (async () => {
   try {
