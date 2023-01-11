@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 import path from 'path';
 import router from './routes/index.js';
 import url from 'url';
+import mongoose from 'mongoose';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +19,15 @@ const URL_DB =
   process.env.URL_DB ||
   'mongodb+srv://admin:TestDrive@cluster0.usesbgc.mongodb.net/?retryWrites=true&w=majority';
 
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}...`);
-});
+(async () => {
+  try {
+    mongoose.set('strictQuery', false);
+    await mongoose.connect(URL_DB);
+    console.log('Server connected to MongoDB');
+  } catch (err) {
+    return console.log('MongoDB connection error', err as Error);
+  }
+  await app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}...`);
+  });
+})();

@@ -1,5 +1,5 @@
-import loginUser from './loginUser.js';
+import registerUser from './registerUser.js';
 
-const userController = { loginUser };
+const userController = { registerUser };
 
 export default userController;
