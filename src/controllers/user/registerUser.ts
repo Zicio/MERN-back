@@ -5,7 +5,7 @@ import User from '../../models/user.js';
 import { IUser, TypedRequestBody } from '../../models/modelsTS.js';
 
 const registerUser = async (req: TypedRequestBody<IUser>, res: Response) => {
-  const { email, username, password, avatarUrl } = req.body;
+  const { email, userName, password, avatarUrl } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -16,7 +16,7 @@ const registerUser = async (req: TypedRequestBody<IUser>, res: Response) => {
 
   const doc = new User<IUser>({
     email,
-    username,
+    userName,
     password: passwordHash,
     avatarUrl,
   });

@@ -2,7 +2,7 @@ import { Request } from 'express';
 
 export interface IUser {
   email: string;
-  username: string;
+  userName: string;
   password: string;
   avatarUrl?: string;
 }
