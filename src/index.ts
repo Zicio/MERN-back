@@ -20,7 +20,7 @@ const URL_DB = process.env.URL_DB;
 (async () => {
   try {
     mongoose.set('strictQuery', false);
-    await mongoose.connect(URL_DB);
+    await mongoose.connect(URL_DB as string);
     console.log('Server connected to MongoDB');
   } catch (err) {
     return console.log('MongoDB connection error', err as Error);
