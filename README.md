@@ -1,1 +1,1 @@
-https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/linting App/badge.svg
+![example workflow](https://github.com/github/docs/actions/workflows/lint.yml/badge.svg)
