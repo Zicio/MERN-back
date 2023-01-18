@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { IUserModel } from './modelsTS.js';
 
 const userSchema = new Schema(
   {
@@ -22,6 +23,6 @@ const userSchema = new Schema(
   },
 );
 
-const User = model('User', userSchema);
+const User = model<IUserModel>('User', userSchema);
 
 export default User;

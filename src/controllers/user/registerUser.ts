@@ -2,43 +2,40 @@ import { Response } from 'express';
 import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
 import User from '../../models/user.js';
-import { IUser, TypedRequestBody } from '../../models/modelsTS.js';
+import { ITypedRequestBody, IUser, IUserModel } from '../../models/modelsTS.js';
+import setToken from '../../utils/setToken.js';
 
-const registerUser = async (req: TypedRequestBody<IUser>, res: Response) => {
-  const { email, userName, password, avatarUrl } = req.body;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+export default async (req: ITypedRequestBody<IUser>, res: Response) => {
+  try {
+    const { email, userName, password, avatarUrl } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(password, salt);
+
+    const doc = new User({
+      email,
+      userName,
+      password: passwordHash,
+      avatarUrl,
+    });
+
+    const user: IUserModel = await doc.save();
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: docUserPassword, ...userData } = user._doc;
+
+    res.json({
+      ...userData,
+      token: setToken(user._id),
+    });
+  } catch (e) {
+    console.log(e as Error);
+    res.status(500).json({
+      message: 'Не удалось зарегистрироваться',
+    });
   }
-
-  const salt = await bcrypt.genSalt(10);
-  const passwordHash = await bcrypt.hash(password, salt);
-
-  const doc = new User<IUser>({
-    email,
-    userName,
-    password: passwordHash,
-    avatarUrl,
-  });
-
-  const user = await doc.save();
-
-  res.json({
-    success: true,
-    user,
-  });
-  // const token = jwt.sign(
-  //   {
-  //     email: req.body.email,
-  //     userName: req.body.userName,
-  //   },
-  //   process.env.JWT_KEY as string,
-  // );
-  //
-  // res.json({
-  //   success: true,
-  //   token,
-  // });
 };
-
-export default registerUser;
