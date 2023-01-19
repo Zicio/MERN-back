@@ -1,8 +1,9 @@
 import { Response } from 'express';
-import User from '../../models/user.js';
-import { ITypedRequestBody, IUser } from '../../models/modelsTS.js';
+import User from '../../models/DBModels/user.js';
+import { IUser } from '../../models/TSModels/user.js';
 import bcrypt from 'bcrypt';
 import setToken from '../../utils/setToken.js';
+import { ITypedRequestBody } from '../../models/TSModels/general.js';
 
 export default async (req: ITypedRequestBody<IUser>, res: Response) => {
   try {

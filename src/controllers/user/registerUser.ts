@@ -1,9 +1,10 @@
 import { Response } from 'express';
 import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
-import User from '../../models/user.js';
-import { ITypedRequestBody, IUser, IUserModel } from '../../models/modelsTS.js';
+import User from '../../models/DBModels/user.js';
+import { IUser, IUserModel } from '../../models/TSModels/user.js';
 import setToken from '../../utils/setToken.js';
+import { ITypedRequestBody } from '../../models/TSModels/general.js';
 
 export default async (req: ITypedRequestBody<IUser>, res: Response) => {
   try {
@@ -22,7 +23,7 @@ export default async (req: ITypedRequestBody<IUser>, res: Response) => {
       password: passwordHash,
       avatarUrl,
     });
-
+    //TODO попробовать убрать тип
     const user: IUserModel = await doc.save();
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

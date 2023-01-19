@@ -1,12 +1,8 @@
-import { Request } from 'express';
 import { Document } from 'mongoose';
 import { JwtPayload } from 'jsonwebtoken';
+import { IDoc } from './general.js';
 
-export interface IUserDoc<T> {
-  _doc: T;
-}
-
-export interface IUser extends IUserDoc<IUser> {
+export interface IUser extends IDoc<IUser> {
   email: string;
   userName: string;
   password: string;
@@ -14,11 +10,6 @@ export interface IUser extends IUserDoc<IUser> {
 }
 
 export interface IUserModel extends IUser, Document {}
-
-export interface ITypedRequestBody<T> extends Request {
-  userId?: string;
-  body: T;
-}
 
 export interface IDecodedToken extends JwtPayload {
   _id: string;

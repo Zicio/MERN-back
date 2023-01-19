@@ -1,7 +1,7 @@
-import User from '../../models/user.js';
-import { ITypedRequestBody } from '../../models/modelsTS.js';
+import User from '../../models/DBModels/user.js';
 import { Response } from 'express';
 import setToken from '../../utils/setToken.js';
+import { ITypedRequestBody } from '../../models/TSModels/general.js';
 
 export default async (req: ITypedRequestBody<undefined>, res: Response) => {
   try {

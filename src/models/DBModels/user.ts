@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { IUserModel } from './modelsTS.js';
+import { IUserModel } from '../TSModels/user.js';
 
 const userSchema = new Schema(
   {
