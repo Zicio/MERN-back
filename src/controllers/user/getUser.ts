@@ -5,7 +5,7 @@ import { ITypedRequestBody } from '../../models/TSModels/general.js';
 
 export default async (req: ITypedRequestBody<undefined>, res: Response) => {
   try {
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.userId).exec();
 
     if (!user) {
       return res.status(404).json({
@@ -17,8 +17,11 @@ export default async (req: ITypedRequestBody<undefined>, res: Response) => {
     const { password: docUserPassword, ...userData } = user._doc;
 
     res.json({
-      ...userData,
-      token: setToken(user._id),
+      message: 'Информация о пользователе успешно получена',
+      user: {
+        ...userData,
+        token: setToken(user._id),
+      },
     });
   } catch (e) {
     console.log(e as Error);

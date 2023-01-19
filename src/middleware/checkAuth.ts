@@ -4,7 +4,7 @@ import { IDecodedToken } from '../models/TSModels/user.js';
 import { ITypedRequestBody } from '../models/TSModels/general.js';
 
 export default (
-  req: ITypedRequestBody<undefined>,
+  req: ITypedRequestBody<unknown>,
   res: Response,
   next: NextFunction,
 ) => {

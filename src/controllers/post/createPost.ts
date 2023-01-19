@@ -15,12 +15,11 @@ const createPost = async (req: ITypedRequestBody<IPost>, res: Response) => {
     });
 
     const post = await doc.save();
-    //TODO изменить возврат
-    res.json(post);
+    res.json({ message: 'Пост успешно создан', post });
   } catch (e) {
     console.log(e as Error);
     res.status(500).json({
-      message: 'Не создать новый пост',
+      message: 'Не удалось создать новый пост',
     });
   }
 };

@@ -2,7 +2,7 @@ import { Response } from 'express';
 import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
 import User from '../../models/DBModels/user.js';
-import { IUser, IUserModel } from '../../models/TSModels/user.js';
+import { IUser } from '../../models/TSModels/user.js';
 import setToken from '../../utils/setToken.js';
 import { ITypedRequestBody } from '../../models/TSModels/general.js';
 
@@ -23,15 +23,18 @@ export default async (req: ITypedRequestBody<IUser>, res: Response) => {
       password: passwordHash,
       avatarUrl,
     });
-    //TODO попробовать убрать тип
-    const user: IUserModel = await doc.save();
+
+    const user = await doc.save();
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: docUserPassword, ...userData } = user._doc;
 
     res.json({
-      ...userData,
-      token: setToken(user._id),
+      message: 'Пользователь успешно зарегистриован',
+      user: {
+        ...userData,
+        token: setToken(user._id),
+      },
     });
   } catch (e) {
     console.log(e as Error);

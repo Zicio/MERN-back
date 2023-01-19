@@ -1,5 +1,3 @@
-import { Document } from 'mongoose';
-
 export interface IPost {
   title: string;
   text: string;
@@ -8,5 +6,3 @@ export interface IPost {
   imageUrl?: string;
   viewCount?: number;
 }
-
-export interface IPostModel extends IPost, Document {}

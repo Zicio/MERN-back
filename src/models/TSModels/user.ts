@@ -4,8 +4,8 @@ import { IDoc } from './general.js';
 
 export interface IUser extends IDoc<IUser> {
   email: string;
-  userName: string;
   password: string;
+  userName?: string;
   avatarUrl?: string;
 }
 
