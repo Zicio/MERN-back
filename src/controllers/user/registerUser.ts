@@ -1,6 +1,5 @@
 import { Response } from 'express';
 import bcrypt from 'bcrypt';
-import { validationResult } from 'express-validator';
 import User from '../../models/DBModels/user.js';
 import { IUser } from '../../models/TSModels/user.js';
 import setToken from '../../utils/setToken.js';
@@ -9,10 +8,6 @@ import { ITypedRequestBody } from '../../models/TSModels/general.js';
 export default async (req: ITypedRequestBody<IUser>, res: Response) => {
   try {
     const { email, userName, password, avatarUrl } = req.body;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
 
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
